@@ -1,0 +1,2 @@
+arcade>=3.0
+Pillow>=10.0
