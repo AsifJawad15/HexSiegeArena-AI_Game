@@ -180,6 +180,7 @@ class GameView(arcade.View):
         self._txt_help: Optional[arcade.Text] = None
         # Cell label texts (HP numbers, symbols)
         self._cell_labels: List[arcade.Text] = []
+        self._ghost_role_text: Optional[arcade.Text] = None
 
         # -- Phase 7: UI/UX enhancements --
         self._ai_think_time: float = 0.0       # elapsed time while AI thinks
@@ -476,6 +477,12 @@ class GameView(arcade.View):
         self._txt_select_info = arcade.Text(
             "", 20, SCREEN_HEIGHT - HUD_HEIGHT - 160,
             (200, 200, 210), 12, multiline=True, width=220, font_name=FONT_NAME,
+        )
+        self._ghost_role_text = arcade.Text(
+            "", 0, 0,
+            (255, 255, 255, 180), 16,
+            anchor_x="center", anchor_y="center",
+            bold=True, font_name=FONT_NAME,
         )
 
     # ------------------------------------------------------------------
@@ -816,9 +823,12 @@ class GameView(arcade.View):
         arcade.draw_polygon_outline(corners, (*tc[:3], outline_a), 2)
         # Role letter in center
         role = "K" if self.selected_tank.tank_type == TankType.KTANK else "Q"
-        arcade.draw_text(role, gx, gy, (*tc[:3], int(120 + 60 * pulse)),
-                         16, anchor_x="center", anchor_y="center",
-                         font_name=FONT_NAME, bold=True)
+        if self._ghost_role_text is not None:
+            self._ghost_role_text.text = role
+            self._ghost_role_text.x = gx
+            self._ghost_role_text.y = gy
+            self._ghost_role_text.color = (*tc[:3], int(120 + 60 * pulse))
+            self._ghost_role_text.draw()
 
     def _draw_laser_preview(self):
         """Beam preview line + crosshair when hovering a hex along a Queen ray."""
