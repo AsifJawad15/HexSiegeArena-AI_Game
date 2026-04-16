@@ -214,6 +214,19 @@ class _DamageNumber:
     alive: bool = True
     rise_speed: float = 45.0
     font_size: int = 16
+    label: arcade.Text = field(init=False, repr=False)
+
+    def __post_init__(self):
+        self.label = arcade.Text(
+            self.text,
+            self.x,
+            self.y,
+            (*self.color, 255),
+            self.font_size,
+            anchor_x="center",
+            anchor_y="center",
+            bold=True,
+        )
 
     def tick(self, dt: float):
         self.elapsed += dt
@@ -722,16 +735,12 @@ class EffectsManager:
         for dn in self._damage_numbers:
             a = dn.alpha
             if a > 0:
-                s = dn.scale
-                fs = max(8, int(dn.font_size * s))
-                arcade.draw_text(
-                    dn.text,
-                    dn.x, dn.y,
-                    (*dn.color, a),
-                    fs,
-                    anchor_x="center", anchor_y="center",
-                    bold=True,
-                )
+                dn.label.x = dn.x
+                dn.label.y = dn.y
+                dn.label.color = (*dn.color, a)
+                dn.label.font_size = max(8, int(dn.font_size * dn.scale))
+                dn.label.text = dn.text
+                dn.label.draw()
 
     @property
     def busy(self) -> bool:
