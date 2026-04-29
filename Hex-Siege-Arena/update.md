@@ -1,0 +1,769 @@
+# Update Log
+
+## Current Phase
+
+- Step 7: Product flow, screen transitions, match-start clarity, and result resolution completed
+
+## Completed Items
+
+- Applied a Step 7 UI hotfix:
+  - assigned the right-side match rail scroll container correctly so the sidebar resets and behaves more reliably
+  - trimmed the right rail and top/bottom shell sizing slightly so hidden content fits more cleanly on screen
+  - changed the debug toggle hint and input handling so `F3` now reliably opens the debug overlay instead of depending on `Shift+F3`
+  - compacted the Selected Unit card into a tighter stat layout so lower right-rail content is no longer pushed out as aggressively
+  - raised the debug overlay draw priority and added a direct `_input` hook for `F3` so the debug panel can still open even when other controls consume input first
+  - fixed the full-screen modal layer so it no longer steals mouse input from the live match HUD when pause/result overlays are closed
+  - added a Godot `.gdignore` to the raw `audiio` bundle so unsupported source WAVs stop spamming the importer
+- Completed the Step 7 product-flow pass:
+  - polished the main menu into a more confident front-end with stronger hero copy, session snapshot, arena preview, rules preview, version text, and consistent scene transitions
+  - improved the pre-match setup flow so arena choice, rules, and match identity are easier to understand before launching a battle
+  - added screen transition polish across menu, settings, help, replay, and match entry so navigation feels connected instead of stitched together
+  - added a proper in-match phase banner for match start, turn changes, resets, and match resolution
+  - replaced the old escape-to-menu behavior with a real pause overlay that includes Resume, Restart Match, Settings, Main Menu, and Quit
+  - added a proper post-match result overlay with victory/defeat state, match summary, rematch, battlefield review, and main-menu exit flow
+  - added a lightweight onboarding/briefing overlay at match start with a persistent “don’t show again” preference
+  - extended preferences so onboarding visibility is saved alongside audio and accessibility settings
+  - polished the settings, help, and replay shells so they match the same visual language and transition behavior as the rest of the game
+- Started the Step 6 unit identity pass:
+  - strengthened faction distinction on-board with cooler P1 accents and warmer P2 accents
+  - added compact faction markings and clearer forward-facing lens cues on tank sprites
+  - introduced stronger material separation between tracks, hulls, guns, and tech accents
+  - improved selected-unit emphasis with a stronger selected ring and deeper grounding shadow
+  - added low-health readability on the board through health-color shifts and subtle smoke/spark damage cues
+  - connected the Selected Unit card to the on-board piece with faction-colored card framing and accent strip
+  - upgraded the Selected Unit card to include faction, range, and tighter role naming so it feels engineered rather than generic
+  - strengthened model-side faction language with clearer front stripes, top-panel markings, and side-panel accents
+  - pushed Qtank and Ktank farther apart through cleaner Qtank nose/cannon cues and heavier Ktank front plating
+  - improved board-level damage readability through ring warning tinting and stronger low-health cues
+  - strengthened the Selected Unit card bridge with clearer faction-accented naming and role tinting
+  - deepened material zoning so armor, recess, and tech accents read more distinctly at gameplay zoom
+  - made front-facing readability more immediate through brighter nose lights, stronger front chevrons, and darker rear treatment
+  - pushed Qtank and Ktank farther apart again with slimmer Qtank barrel language and broader Ktank frontal massing
+  - completed a final Step 6 silhouette push with stronger hull-width separation, thicker Ktank barrel weight, and a more precise Qtank front cut
+  - strengthened the shared front-language system with clearer front-edge highlights and quieter rear treatment
+  - pushed armor/recess/tech contrast slightly further using value separation rather than louder colors
+- Completed the Step 5 world-building pass:
+  - added a darker layered battlefield backdrop behind the board
+  - introduced a single consistent light direction for board presentation
+  - improved unit grounding with stronger directional shadows
+  - added subtle edge atmosphere using curated smoke and light-mask assets
+  - made the board center feel more important through restrained local glow and focus
+  - added distant sci-fi silhouette shapes so the match no longer feels like empty void space
+  - extended the atmosphere pass to the full match screen so the HUD and board sit inside one world
+  - added restrained screen-level glow, silhouette, and haze layers behind the gameplay shell
+  - improved board-surface lighting so the center contest zone pulls the eye more naturally
+  - refined directional shadow strength and tile light bias so the battlefield feels more intentionally lit
+  - added a softer camera/framing bias by nudging the board upward slightly inside the arena frame
+  - completed a final color-harmony pass across HUD, board, and world layers
+  - added darker structural ribs and chamber-like framing so the background reads more like implied architecture than abstract glow
+  - pushed the atmosphere farther back from the board so it reads as environmental depth instead of a decorative overlay
+  - strengthened the board anchoring plate and outer falloff so the battlefield feels seated inside the scene
+- Tightened the last Step 4 readability blockers:
+  - damage popups are now larger, brighter, and easier to read against the board
+  - movement arrival now has a stronger landing pulse, puff, and settle cue
+- Tightened the Step 4 combat readability pass:
+  - damage numbers are now larger, centered better, and easier to read
+  - attacker fire cues are stronger before target impact
+  - movement arrival has a clearer landing pulse, puff, and resolve beat
+  - destruction now presents a stronger visible and audible finish state
+- Added Step 4F objective reaction polish:
+  - objective state changes now pulse the affected tile
+  - center/objective ring brightens briefly on key objective events
+  - recent-events wording for objective moments is cleaner and more game-like
+  - existing objective confirmation sound now lines up with those reactions
+- Added Step 4D destroy feedback polish:
+  - kills now trigger a stronger elimination burst than a normal hit
+  - destroyed units spawn a brief smoke-and-spark follow-through
+  - destroyed tanks now fade/collapse out instead of disappearing instantly
+  - destroy moments now layer a heavier sound than regular impact feedback
+- Created the initial Godot 4 project skeleton
+- Added root scene flow:
+  - Boot
+  - Main Menu
+  - Match placeholder
+  - Settings placeholder
+- Added autoload foundation:
+  - `AppState`
+  - `EventBus`
+- Added core data classes:
+  - `HexCoord`
+  - `CellData`
+  - `BoardState`
+  - `TankData`
+  - `ActionData`
+  - `GameEvent`
+  - `MatchConfig`
+  - `AIConfig`
+  - `ActionExplanation`
+  - `ReplayRecord`
+- Added shared enum container `GameTypes`
+- Added a simple UI-driven placeholder flow so the project is easy to open and inspect in Godot
+- Expanded `HexCoord` with:
+  - flat-topped world conversion
+  - world-to-hex conversion
+  - raycast
+  - board coordinate generation
+- Expanded `BoardState` with:
+  - empty board generation
+  - terrain mutation helpers
+  - Phase 2 debug terrain
+- Added clickable board debug rendering inside the match scene
+- Added hover and selected tile summaries in the match sidebar
+- Added `GameState` as the first headless gameplay simulation layer
+- Added default unit setup:
+  - P1 Qtank
+  - P1 Ktank
+  - P2 Qtank
+  - P2 Ktank
+- Added movement and attack rules for Qtank and Ktank
+- Added buff handling:
+  - attack multiplier
+  - shield buffer
+  - bonus move
+- Added turn logic:
+  - one action per turn
+  - pass action
+  - bonus extra action
+- Added win and draw protection:
+  - instant center win
+  - Ktank destruction win
+  - turn cap
+  - repetition tracking
+- Upgraded the match scene into a manual gameplay test scene with:
+  - tank rendering
+  - current player state
+  - selected tank info
+  - Move / Attack / Pass buttons
+  - action highlights
+  - event log
+
+## Step 7 Verification
+
+- main menu now feels like the front door of the same game you play in-match
+- starting a skirmish now carries clear arena/rules context before loading into battle
+- match start and turn changes now have a readable phase banner
+- pause/settings now behave like real product screens instead of dev shortcuts
+- winning or losing now ends in a dedicated result screen with closure and next-step buttons
+- onboarding guidance is short, optional, and persistent instead of noisy
+- screen-to-screen flow now uses one clean transition language
+- Added data-driven map content support:
+  - `MapPreset`
+  - `MapLibrary`
+- Replaced the hardcoded Phase 2 terrain bootstrap with preset loading from `MatchConfig.map_id`
+- Added map metadata on `BoardState`:
+  - map id
+  - display name
+  - description
+  - hidden reveal mapping for power blocks
+- Added three preset definitions:
+  - `standard`
+  - `open`
+  - `fortress`
+- Added Reset support in the match scene so the current configured map can be reloaded quickly during testing
+- Improved hit-cell event text so revealed power tiles are visible in the log
+- Added the first AI module:
+  - `MinimaxAI`
+  - alpha-beta pruning
+  - iterative deepening
+  - move ordering
+  - heuristic evaluation
+  - explanation output
+- Added simulation-friendly helpers on `GameState`:
+  - `simulate_action`
+  - `get_state_hash`
+  - current-player AI config lookup
+- Added `AI Move` support in the match scene for Minimax-configured turns
+- Added AI explanation text in the match sidebar with:
+  - summary
+  - score
+  - depth
+  - nodes searched
+  - elapsed time
+- Updated the main menu copy so the current build phase is no longer stale
+- Added the second AI module:
+  - `MctsAI`
+  - selection
+  - expansion
+  - simulation
+  - backpropagation
+  - UCT scoring
+  - rollout bias toward center pressure, buffs, and tactical hits
+- Upgraded `AI Move` so it now dispatches by controller type:
+  - Minimax
+  - MCTS
+  - Human-disabled
+- Added MCTS-specific explanation output in the match sidebar with:
+  - score
+  - iterations
+  - rollouts
+  - elapsed time
+- Upgraded the match scene into an AI arena control prototype with:
+  - `Step AI`
+  - `Auto` toggle
+  - speed cycling
+  - timer-driven autoplay
+- Added turn history inspection backed by `AppState.current_replay`:
+  - per-turn source label
+  - summary
+  - metrics
+  - event lines
+  - resulting state hash
+- Added arena stats text showing:
+  - recorded turn count
+  - latest turn source
+  - latest state hash
+- Autoplay now stops cleanly on:
+  - reset
+  - match end
+  - leaving the match scene
+- Upgraded the match HUD with clearer tactical structure:
+  - objective header
+  - player summary cards
+  - preview panel
+  - stronger map/AI context grouping
+- Improved board readability in the match scene:
+  - center objective ring
+  - stronger move/attack preview outlines
+  - active-player tank outlines
+  - on-board HP numbers
+  - buff markers on units
+- Added player-facing summary helpers:
+  - Ktank center distance
+  - total team HP
+  - selected-unit preview text
+  - buff labels
+- Added battlefield depth treatment to the board renderer:
+  - raised tile shadows
+  - darker side faces
+  - top-edge highlights
+  - ambient board backdrop shapes
+- Added animated objective and power presentation:
+  - pulsing center glow
+  - power-tile glows
+  - hover lift
+  - selected tile lift
+- Improved unit presentation for a fake-3D feel:
+  - tank drop shadows
+  - active-unit rings
+  - stronger battlefield layering
+- Added a more atmospheric match backdrop with soft color bands behind the board and HUD
+- Applied a post-Phase 9 layout fix for usability:
+  - board viewport now clips correctly
+  - board recenters and scales to available panel space
+  - sidebar content now scrolls instead of being cut off
+- Completed the Phase 10 visual identity pass:
+  - Qtank now renders as a slimmer laser-focused chassis
+  - Ktank now renders as a heavier siege silhouette with treads and turret
+  - tile tops now include material-specific overlays for walls, blocks, armor, center, and power cells
+  - board icons and legend text now better match the rendered pieces
+- Completed the Phase 11 combat feedback pass:
+  - Qtank attacks now draw a short-lived laser beam and impact pulse
+  - Ktank attacks now trigger blast rings and neighbor hit flashes
+  - damage now spawns floating text over impacted cells
+  - hit and destruction events add flash pulses and subtle screen shake
+  - movement now leaves a brief travel streak and arrival ring
+- Completed the Phase 12 audio pass:
+  - added `AudioManager` as a new autoload for music and SFX playback
+  - copied selected Kenney and custom files into `assets/audio` with stable runtime filenames
+  - menu and settings now play menu music automatically
+  - the match scene now switches to dedicated gameplay music
+  - UI buttons now play hover, click, and back sounds
+  - move, attack, hit, power-up, turn change, and result events now trigger audio feedback
+  - `audio.md` now documents the actual selected files and their runtime locations
+- Completed the Phase 13 shell pass:
+  - the main menu now includes match setup controls for player controllers, map selection, and turn limit
+  - the settings scene now includes live audio sliders for music, SFX, and UI volume
+  - added a replay shell scene that browses recorded turns from `AppState.current_replay`
+  - the menu can now launch the replay shell when recorded turns exist
+  - replay metadata now records the winner label on game end
+- Completed the Phase 14 replay/analytics pass:
+  - added `ReplayAnalytics` to compute replay summaries from recorded event data
+- Replaced the heavyweight match dashboard direction with a board-first tactical HUD inspired by the gameplay reference
+- Moved tank presentation fully onto the board using the new PNG tank asset set
+- Rebuilt the live match scene around:
+  - compact top status bar
+  - centered battlefield
+  - narrow combat log
+  - compact selected-unit intel
+  - bottom-right minimap
+  - thin command strip with keyboard hints
+- Added compact pressure score and HP summary text to the top bar
+- Switched the combat log to recent turn-history output instead of only the last action
+- Added keyboard shortcuts in match:
+  - `M` move
+  - `A` attack
+  - `P` pass
+  - `Space` step AI
+  - `Z` autoplay
+  - `R` reset
+  - `H` help
+- Added presentation pacing to make actions readable and more physical:
+  - tanks now visibly travel between hexes instead of snapping
+  - attack beams, blast rings, hit flashes, and floating damage stay on screen longer
+  - turn flow now waits for movement and attack feedback before allowing the next action
+  - autoplay respects the slower presentation window so AI turns can be watched clearly
+- Improved movement readability:
+  - removed the laser-like move effect
+  - move feedback now uses travel and arrival cues instead of a beam
+  - tanks now store facing direction and rotate when they move
+  - Qtanks also turn to face their firing direction
+  - turn snapshots now store structured event payloads in addition to formatted event lines
+  - the replay viewer now shows winner, win condition, damage, pickups, kills, and average think times
+  - the match scene now shows a post-match summary block when the game ends
+  - replay metadata now stores the winner label for later review
+- Applied a focused balance/map expansion pass:
+  - strengthened default Minimax settings so the default AI-vs-AI matchup favors Minimax more reliably
+  - reduced default MCTS rollout/time settings so MCTS remains competitive without outpacing the deeper search default
+  - expanded Minimax evaluation with mobility, pressure, and danger awareness
+  - added `labyrinth` as a larger obstacle-dense map for more deliberate tactical planning
+  - lowered the board minimum scale clamp so larger maps still fit in the arena panel
+- Completed the Phase 15 finish pass:
+  - added a `Quick Start Guide` scene with rules, unit roles, AI overview, and first-match advice
+  - added accessibility settings for UI scale, reduced motion, and higher-contrast highlights
+  - applied window UI scaling across menu, match, settings, help, and replay screens
+  - added an in-match guide panel toggle so the core rules stay accessible during play
+  - reduced board shake automatically when reduced motion is enabled
+  - strengthened contrast for previews and team colors when high contrast mode is enabled
+- Added a replay reconstruction upgrade:
+  - replay metadata now stores the initial board state
+  - each recorded turn now stores a full post-action state snapshot
+  - the replay viewer now includes a passive board preview that scrubs through actual recorded states
+  - replay browsing now starts from `Start State` and can step forward through reconstructed match positions
+- Added preference persistence:
+  - match setup now saves to `user://` and reloads on startup
+  - accessibility settings now persist across sessions
+  - audio volume settings now persist across sessions
+  - reset runtime state now clears match/replay runtime data while preserving the saved preferences model
+- Added a Phase 16 visual polish pass focused on the live match scene:
+  - copied the four custom `.glb` tank assets into `assets/art/tanks` with stable runtime names
+  - copied `Space Grotesk` into `assets/fonts/space_grotesk` and wired it into the match scene
+  - added `TankModelView`, a live 3D showcase control for tank models
+- Rebuilt the gameplay HUD around a clearer production layout:
+  - top HUD now carries only match-critical information
+  - center area is dominated by the board inside a framed arena container
+  - right panel now groups selected unit info, objective text, and a compact combat log
+  - bottom action bar now groups the main player actions into one place
+- Hid debug-style controls and helper text from the default match view
+- Added an `F3` debug toggle for:
+  - AI step/autoplay controls
+  - reset/back controls
+  - raw hover/selected tile summaries
+  - minimap and technical state text
+- Increased the board’s visual priority by:
+  - enlarging the board container
+  - reducing empty space around it
+  - increasing the board scale ceiling
+- Forced the game window into fullscreen on startup and in project settings
+- Tightened the match scene spacing and minimum sizes so the full HUD fits more safely on-screen in fullscreen play
+- Moved the `F3` debug panel into an overlay so it no longer pushes the normal gameplay HUD downward
+- Replaced fragile viewport input handling with direct `accept_event()` key handling in the match scene
+- Wrapped the debug overlay contents in a scroll container so the full debug panel remains reachable on smaller screens
+- Made the main menu fullscreen-safe by wrapping the page in a scroll container
+- Tightened menu spacing, titles, side panel width, and button sizing so the full menu remains readable without clipping
+- Added visible exit actions:
+  - `Exit Game` button on the main menu
+  - `Quit` button in the in-match `F3` debug overlay
+- Rebuilt the main menu into a cleaner fullscreen shell:
+  - hero header with clearer product messaging
+  - polished setup card with grouped match controls
+  - stronger primary and secondary action buttons
+  - slimmer support cards instead of the old release-notes wall
+- Applied a follow-up match HUD polish pass:
+  - right-side gameplay rail now scrolls safely on smaller screens
+  - cards and action buttons use stronger radius, shadow, and spacing treatment
+  - selected-unit copy is more product-styled and less raw/debug-like
+  - objective wording is shorter and cleaner in the live HUD
+- Expanded the live board viewport so fullscreen match play uses more of the screen:
+  - removed the fixed-size centered board holder
+  - let the arena surface fill the available board frame
+  - reduced the board’s internal safety padding so it scales up more aggressively
+  - trimmed the right rail width so the battlefield gets more horizontal space
+- Applied a Step 1 completion pass to the match scene:
+  - made the board scale noticeably larger again
+  - cut more empty safety space from the board frame and backdrop
+  - narrowed the right rail so the battlefield owns more of the screen
+  - strengthened the bottom action buttons with more size and visual weight
+  - force-reset the debug overlay to hidden whenever a fresh match is built
+- Applied a final Step 1 cleanup pass:
+  - increased the board scale one more time inside the arena frame
+  - reduced internal board-fit padding again to cut leftover empty dark space
+  - moved debug toggling to `Shift+F3` so it stays out of normal showcase play
+  - auto-hides debug whenever gameplay actions or autoplay begin
+- Applied an aggressive board-fill pass:
+  - removed the last internal board frame margins
+  - cut the board-fit safety padding down again on both axes
+  - tightened the backdrop rectangle so the hex field uses more of the center frame
+  - increased the board scale cap again for fullscreen play
+- Rebuilt the remaining shell scenes into the same premium visual language:
+  - Settings now uses a hero header, grouped accessibility/audio cards, and stronger action buttons
+  - Quick Start Guide now uses structured learning cards instead of a plain text page
+  - Replay Viewer now uses a cleaner hero summary, polished controls, larger board preview, and safer detail scrolling
+- Promoted the project shell to Phase 17 / final cleanup and premium polish
+  - redesigned the match HUD into a more product-style tactics layout with a hero header, cleaner card hierarchy, and a dedicated command deck
+  - added a four-unit roster strip beneath the board so all four distinct tanks are visible in the main game scene
+  - added a larger selected-unit showcase card that tracks the currently selected or active tank
+  - upgraded on-board labels to use the same font family for a more cohesive look
+  - removed the phase/debug feel from the match title in favor of a proper game identity
+- Added a Godot 4.6 compatibility hotfix:
+  - switched the tank showcase viewport usage enum reference from `SubViewport.USAGE_3D` to `Viewport.USAGE_3D`
+- Added a second Godot 4.6 viewport compatibility hotfix:
+  - removed the explicit viewport `usage` assignment from the tank showcase because the enum is not exposed in this editor build
+- Added a match-layout visibility hotfix:
+  - moved the four 3D tank showcase cards into a guaranteed visible roster row above the board viewport
+  - reduced the board holder minimum height so the HUD has room for the roster strip
+  - reduced the selected-unit showcase height so more sidebar content fits on screen
+  - disabled button focus-jump behavior and reset the sidebar scroll to the top on scene load
+- Reworked the tank presentation toward the board-first reference style:
+  - copied a curated set of PNG hull, track, and gun assets into `assets/art/tanks2d`
+  - replaced the board’s code-drawn tank silhouettes with composited PNG tank sprites rendered directly on the hexes
+  - added simple on-board HP bars beneath the tanks for faster readability
+- removed the separate roster/showcase treatment from the main game scene so the board is the primary visual focus again
+- Completed the initial Step 2 HUD skin pass:
+  - created a clean runtime `assets/ui` structure with `kenney_scifi`, `kenney_base`, `fonts`, and `exported`
+  - copied Rajdhani and Inter into `assets/ui/fonts` for the live HUD font system
+  - curated and exported a reusable sci-fi panel/button set into `assets/ui/exported`
+  - applied the new font system to the live match HUD
+- Applied Step 2A theme correction to the match scene:
+  - removed the pale glossy panel treatment from the live match HUD
+  - rebuilt the top HUD, right rail, and bottom bar around one dark tactical panel family
+  - darkened the board surround so the battlefield sits inside the same sci-fi system
+  - raised text contrast across headings, labels, and body copy for faster readability
+  - normalized the button family back into the darker tactical shell while the stronger Step 2B button pass remains pending
+- Applied Step 2B HUD emphasis pass:
+  - strengthened action buttons with larger size, brighter labels, stronger borders, and clearer hover/pressed states
+  - added obvious active-state styling for Move and Attack modes
+  - improved the selected-unit card hierarchy with dimmed labels and brighter values
+  - cleaned the Objective card into a shorter primary-goal block
+  - rewrote Recent Events into shorter player-facing combat lines instead of raw technical phrasing
+  - increased top-bar emphasis on turn, active side, and score while keeping counters quieter
+- Applied a Step 2B follow-up correction:
+  - made MOVE, ATTACK, and ABILITY visually stronger instead of leaving most emphasis on only END TURN
+  - removed turn-code prefixes and generic system wording from Recent Events
+  - rewrote combat lines into shorter battlefield language such as damage, movement, captures, and destruction
+  - increased selected-unit stat value emphasis so values stand out more clearly than labels
+- Applied the first Step 3 battlefield readability pass:
+  - strengthened base hex readability with better edge separation and subtle surface variation
+  - added cleaner hover and selected-tile emphasis rules
+  - added faction rings and stronger selected-unit grounding under tanks
+  - added clearer move-range and attack-range overlays with distinct color families
+  - added move path preview for hovered reachable destinations
+  - added attack preview lines with invalid-target feedback
+  - strengthened center-objective presentation and center-focus lighting bias
+  - reordered board presentation so overlays, units, rings, targets, and hover cues stay visually readable
+- Applied a Step 3 follow-up readability correction:
+  - made full move range read more strongly as an area instead of only a destination marker
+  - made hovered move destinations brighter than the rest of the reachable field
+  - strengthened attack mode with clearer target-cell warning treatment and stronger target lines
+  - increased selected-unit grounding with brighter rings, stronger shadow, and stronger selection pulse
+  - made the hovered tile itself react more clearly
+  - added a simpler danger language for targetable enemy cells during attack mode
+- Added a human-turn input reliability fix:
+  - human turns now auto-sync to a real selected unit instead of only showing a visual focus unit
+  - Move and Attack now recover from empty selection state before trying to enter their modes
+  - human button flow should no longer feel dead at the start of a turn
+- Added a mouse-input HUD fix:
+  - the fullscreen debug overlay now ignores mouse input while hidden
+  - visible HUD buttons such as Move, Attack, and End Turn should now be clickable by mouse
+- Started Step 4 feedback polish using the existing `assets/audio` runtime set plus curated Kenney sci-fi/interface/particle assets:
+  - added stronger button hover/press feedback so the main actions feel less static
+  - added unit-selection acknowledgment with sound and ring pulse
+  - strengthened movement feedback with path-trace and arrival puff support
+  - strengthened attack feedback with muzzle/impact sprite accents on top of the existing beam/blast logic
+  - strengthened destruction/objective feedback with clearer burst layers
+  - added a top-bar turn transition pulse so state changes read more clearly
+- Applied a focused Step 4A attack-feel correction:
+  - attacks now use a short readable wind-up before firing
+  - attack audio now sequences charge into fire instead of stacking instantly
+  - muzzle flashes, beams, and impact sparks land in a clearer timed order
+  - damage popups are larger and more readable
+  - hit targets now get a clearer impact flash and small recoil response
+- Applied a focused Step 4B target-reaction correction:
+  - hit targets now get a brighter direct flash on the unit itself
+  - target recoil is stronger and lasts slightly longer
+  - impact burst and hit ring are easier to read
+  - damage numbers are larger and easier to notice over the battlefield
+- Applied a focused Step 4C movement-feel correction:
+  - move confirmation now has a clearer start pulse
+  - travel traces persist more clearly during movement
+  - movement now includes a subtle settle on arrival instead of ending too abruptly
+  - destination arrival uses a clearer landing puff and flash
+  - movement audio now reads more like start plus arrival instead of one flat cue
+
+## Next Items
+
+- Review the Step 6 unit identity pass inside Godot
+- Tighten faction readability, low-health clarity, and selected-card cohesion based on runtime feedback
+
+## User Check List
+
+- Confirm Blue and Red units feel distinct while still belonging to the same world
+- Confirm each unit's facing is easier to understand at gameplay zoom
+- Confirm damaged units are readable on the board without relying only on the right panel
+- Confirm the Selected Unit card feels visually connected to the selected tank
+- Open the project in Godot 4
+- Confirm it imports without parse errors
+- Run the project
+- Confirm it opens into the menu screen
+- Confirm the menu subtitle/summary reflects the current prototype phase
+- Open the match scene from the menu
+- Confirm the sidebar shows:
+  - map info
+  - controller info
+  - AI explanation text
+- Confirm the match title reflects the current shell phase
+- Confirm the new top section shows:
+  - turn info
+  - objective text
+  - Player 1 summary card
+  - Player 2 summary card
+- Confirm player cards show:
+  - controller type
+  - Ktank HP and center distance
+  - Qtank HP
+  - total team HP
+- Confirm the new buttons appear:
+  - `Step AI`
+  - `Auto`
+  - `Speed`
+  - `Reset`
+- Click `Step AI` on Player 1 and confirm Minimax acts legally
+- Click `Step AI` on Player 2 and confirm MCTS acts legally
+- Turn on `Auto` and confirm the match keeps progressing without extra clicks
+- Press `Speed` and confirm autoplay pacing changes
+- Confirm manual controls are disabled while autoplay is running
+- Confirm the turn history list fills with entries as actions happen
+- Click older history entries and confirm the detail text changes
+- Confirm the arena stats panel updates with recorded turn count and state hash
+- Select a tank and confirm the preview panel changes based on:
+  - selected unit
+  - move mode
+  - attack mode
+- Confirm the board now makes it easier to read:
+  - active player's units
+  - center objective
+  - highlighted move vs attack tiles
+  - unit HP and buff markers
+- Confirm the battlefield now feels more dimensional:
+  - tiles have visible depth/shadow
+  - hovered and selected tiles lift visually
+  - center tile pulses
+  - power tiles glow subtly
+  - tanks cast shadows
+- Confirm the layout bug is fixed:
+  - the board no longer covers the top player cards
+  - the board stays inside its panel
+  - the right sidebar can scroll so all content is reachable
+- Confirm the backdrop feels less flat:
+  - soft color bands behind the arena
+  - more atmospheric board framing
+- Confirm Phase 10 improves visual differentiation:
+  - Qtank and Ktank silhouettes are clearly different at a glance
+  - armor, wall, block, center, and power cells feel materially distinct
+  - the updated tank look still keeps HP text and buff markers readable
+- Confirm Phase 11 combat feedback feels responsive:
+  - Qtank laser shots show a beam and impact pulse
+  - Ktank attacks show blast rings and neighboring hit flashes
+  - floating damage numbers appear over hit cells or tanks
+  - brief shake happens on impactful attacks without breaking hover/click accuracy
+  - move actions show a quick travel streak and landing pulse
+- Confirm Phase 12 audio is working:
+  - menu music starts in the menu
+  - settings keeps menu music
+  - opening the match switches to gameplay music
+  - button hover and click sounds play
+  - move sounds differ between Qtank and Ktank
+  - Qtank attack plays charge/fire/hit style audio
+  - Ktank attack plays heavy blast audio
+  - pickups, extra action, turn change, and result sounds play
+- Confirm Phase 13 shell additions work:
+  - the main menu shows match setup controls
+  - changing controller or map setup updates the launch config
+  - settings sliders update audio levels live
+  - after a match with recorded turns, the replay viewer opens from the menu
+  - replay play/pause/step/restart controls browse the recorded turn list correctly
+- Confirm Phase 14 analytics are useful:
+  - the replay viewer shows winner, map, win condition, damage, pickups, kills, and average think times
+  - the match scene shows a post-match summary after game over
+  - replay details still open correctly for individual turns
+- Confirm the AI/map tuning works:
+  - in the default AI-vs-AI setup, Minimax should now perform more strongly against MCTS
+  - the `Labyrinth` map appears in menu setup
+  - the larger map fits in the match panel without clipping
+  - the denser block layout creates more meaningful pathing choices
+- Confirm the Phase 15 finish pass works:
+  - `Quick Start Guide` opens from the menu
+  - the help scene shows onboarding sections and its buttons work
+  - Settings now show `UI Scale`, `Reduced Motion`, and `High Contrast Highlights`
+  - changing `UI Scale` visibly scales the interface
+  - enabling `Reduced Motion` removes board shake during attacks and movement
+  - enabling `High Contrast Highlights` makes move/attack/team colors stand out more strongly
+  - the match scene title now reflects the Phase 15 finish pass
+  - the `Guide` button in match shows and hides the quick guide text
+- Confirm the replay reconstruction upgrade works:
+  - replay viewer shows a board preview panel
+  - timeline begins with `Start State`
+  - stepping through replay updates the board position, not just the text panel
+  - the reconstructed board matches the selected turn details
+- Confirm the persistence upgrade works:
+  - change map/controller/depth/rollout values in menu, close the project, reopen it, and confirm they persist
+  - change audio/accessibility settings, close the project, reopen it, and confirm they persist
+  - `Reset Runtime State` restores default match config/replay runtime data cleanly
+- Confirm the new Phase 16 match polish works:
+  - the match scene now opens with `HEX SIEGE ARENA` instead of a phase/debug title
+  - the hero header, player cards, board frame, and sidebar feel cleaner and more intentional
+  - the four tank cards under the board each render a distinct 3D model
+  - the selected-unit card renders a larger 3D model and updates when you click different tanks
+  - the board still fits cleanly with the new roster strip visible
+  - the new Space Grotesk font is visible in the match scene HUD and on-board labels
+  - move, attack, pass, AI step, autoplay, reset, history, and replay still work normally
+- Confirm `Auto` is disabled if either side is set to Human
+- Confirm reset clears history and returns the board to the start state
+- Open the settings scene from the menu and confirm the back button still returns to the menu
+- Confirm the main menu now shows an `Exit Game` button
+- Confirm pressing `Exit Game` closes the game
+- Confirm pressing `F3` in-match shows a `Quit` button in the debug overlay
+- Confirm pressing `Quit` from the match scene closes the game cleanly
+- Confirm the main menu now feels cleaner and more intentional:
+  - hero header
+  - setup panel
+  - grouped action rows
+  - support cards on the right
+- Confirm the match right rail scrolls cleanly if the window becomes shorter
+- Confirm the selected-unit panel wording now reads more like a finished game HUD than a debug tool
+- Confirm the board now fills more of the match screen in fullscreen
+- Confirm the arena frame has much less wasted empty space around the hex grid
+- Confirm the bottom action buttons feel larger and more primary
+- Confirm a fresh match always starts with the debug overlay hidden
+- Confirm plain `F3` no longer opens debug by accident
+- Confirm `Shift+F3` still opens debug when intentionally testing
+- Confirm the board now uses most of the central frame with very little left/right dead space
+- Confirm Settings now matches the menu/match visual language
+- Confirm Quick Start Guide feels more like a finished product page than a plain text scene
+- Confirm Replay Viewer feels polished, readable, and uses a larger board preview
+- Confirm the Step 2A theme correction is applied consistently:
+  - pale glossy panels are gone from the match scene
+  - the top HUD is dark and readable
+  - the right rail cards are dark and readable
+  - the bottom bar background matches the same dark tactical family
+  - Rajdhani is visible on headings, numbers, and action labels
+  - Inter is visible on body copy, logs, and descriptive text
+  - the board surround is dark enough to match the battlefield instead of fighting it
+- Confirm the Step 2B HUD emphasis pass works:
+  - bottom buttons feel stronger and more clickable
+  - active Move or Attack mode is visually obvious
+  - the Selected Unit card has clearer label/value hierarchy
+  - the Objective card reads as a short primary goal instead of a dense block
+  - Recent Events no longer shows raw technical-looking text
+  - the top bar makes turn, active side, and score stand out more clearly
+- Confirm the Step 2B follow-up correction works:
+  - MOVE, ATTACK, and ABILITY feel as intentional as END TURN
+  - active button states are obvious at a glance
+  - Recent Events does not show turn-code prefixes like `T5 P2`
+  - Recent Events does not show generic filler like `Battlefield state updated`
+  - Selected Unit values stand out more strongly than their labels
+- Confirm the Step 3 battlefield readability pass works:
+  - hovered tiles are easy to notice without overpowering selection
+  - selected units feel clearly grounded with faction rings and stronger lock-on emphasis
+  - move range uses a readable cyan overlay family
+  - attack range uses a distinct orange-red warning family
+  - hovering a reachable move destination shows a path preview
+  - hovering an attack target shows a readable preview line
+  - invalid attack previews look visibly different from valid ones
+  - the center objective tile stands out even when nothing is selected
+  - the board reads more clearly without looking noisy or muddy
+- Confirm the Step 3 readability correction works:
+  - full move area is visible at a glance, not just the chosen destination
+  - hovered move destination is brighter than the rest of the move field
+  - attack mode feels clearly different from move mode
+  - targetable enemy cells get stronger warning treatment in attack mode
+  - selected units are more unmistakable at a glance
+  - hovered tiles react clearly on the board itself, not only through a marker
+- Confirm the human control fix works:
+  - on a Human-controlled turn, a real unit is selected for Move and Attack actions
+  - Move enters move mode normally
+  - Attack enters attack mode normally
+  - End Turn still works normally
+- Confirm the HUD mouse-input fix works:
+  - clicking Move works the same way as pressing `M`
+  - clicking Attack works the same way as pressing `A`
+  - clicking End Turn works normally by mouse
+- Confirm the first Step 4 feedback pass works:
+  - main buttons feel more responsive on hover and press
+  - selecting a unit gives a clear acknowledgment
+  - movement has clearer start/travel/arrival feedback
+  - attacks feel sharper at source and impact
+  - destruction and objective moments read more strongly without overwhelming the board
+  - turn changes feel more noticeable from the HUD
+- Confirm the Step 4A attack-feel correction works:
+  - attacks show a brief readable wind-up before firing
+  - muzzle flash appears clearly at the attacker
+  - beam or blast timing is easier to follow
+  - impact spark reads clearly on the target
+  - damage numbers are easier to notice
+  - hit targets react more clearly instead of feeling static
+- Confirm the Step 4B target-reaction correction works:
+  - hit targets flash clearly for a brief moment
+  - hit targets recoil visibly before settling back
+  - impact spark/burst reads clearly on contact
+  - damage numbers stand out immediately when damage lands
+- Confirm the Step 4C movement-feel correction works:
+  - movement starts with a clearer confirmation pulse
+  - path remains visible while the unit is traveling
+  - movement feels smoother and less abrupt in transit
+  - destination arrival has a noticeable but subtle landing moment
+  - movement still feels responsive and not too slow
+- Confirm the Step 4D destroy-feedback correction works:
+  - destroyed units do not disappear quietly or instantly
+  - kill moments show a stronger burst than a regular hit
+  - smoke and spark follow-through are visible on destruction
+  - the destroyed unit fades/collapses out cleanly
+  - destroy sound reads stronger than a normal impact
+- Confirm the Step 4F objective-reaction correction works:
+  - objective state changes pulse the relevant tile
+  - objective ring brightens briefly during those reactions
+  - recent-events lines for pickups/center control read like game language
+  - objective sound lines up with the visible pulse
+- Confirm the Step 4 readability-tuning correction works:
+  - damage numbers are clearly readable at normal speed
+  - attacker fire cue is obvious before the target impact
+  - movement landing feels more resolved at the destination
+  - at least one destruction moment reads clearly stronger than a normal hit
+- Confirm the final Step 4 readability pass works:
+  - `-2` / `-3` style damage popups are easy to read at normal speed
+  - movement arrival visibly resolves at the destination instead of feeling abrupt
+- Confirm the Step 5 world pass works:
+  - the board no longer feels like it floats in empty darkness
+  - the backdrop feels like a dark sci-fi arena instead of a flat void
+  - unit shadows feel more intentional and dimensional
+  - center tension draws the eye naturally without overpowering gameplay
+  - the added atmosphere stays behind the tactics information
+- Confirm the Step 5 completion pass works:
+  - the whole match screen feels like one dark sci-fi command arena, not just the board panel
+  - the HUD sits inside the same world tone as the battlefield
+  - lighting direction feels intentional across tiles, units, and shadows
+  - the board is framed slightly upward and more deliberately in the center space
+  - background haze, light masks, and silhouettes add depth without stealing attention
+  - the world layer feels premium even when nothing is moving
+  - the background now reads like implied arena architecture instead of abstract wallpaper
+  - units feel better planted to the battlefield through stronger contact shadows
+  - outer corners feel quieter so the eye returns to the center combat zone
+
+## Resources Needed Soon
+
+- No immediate audio blocker remains for Phase 12
+- `audio.md` now documents the selected runtime audio set copied into `assets/audio`
+- No immediate asset blocker for Phase 13
+- No immediate asset blocker for Phase 14
+- For future polish, better custom heavy movement or bespoke match-result stings could still improve the feel
+- For future map polish, exact approved layouts for `standard`, `open`, and `fortress` would help replace the current implementation-ready presets
+- For future premium polish, final tile textures and a branded title/logo would add more finish than more HUD text ever will
+
+## Known Issues
+
+- Godot CLI is not available in this environment, so editor/runtime verification must be done manually inside Godot
+- Autoplay currently assumes both sides are AI-controlled and uses a simple timer loop rather than a full spectator shell
+- The battlefield now uses stylized 2D tank sprites on-hex; a future art pass can still refine final silhouette selection and sprite polish
+- The new combat VFX are code-drawn and intentionally lightweight; final particles and authored animation can replace them later
+- The current audio selection is a curated first-pass mix of Kenney and custom files, so some sounds may still be swapped later for stronger cohesion
+- The `open` and `fortress` presets are defined for future use, but the current UI still launches the configured default map only
+- The Step 2 UI skin uses curated exported pieces from the Kenney space expansion pack; if a different sci-fi family is preferred later, swapping the exported textures should be straightforward

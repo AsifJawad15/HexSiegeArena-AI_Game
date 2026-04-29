@@ -1,0 +1,34 @@
+/.godot/
+*.import
+*.uid
+
+# Local source asset drops and references
+/PNG/
+/Space_Grotesk/
+/custom_tanks/
+/game-icons.net.svg/
+/kenney_input-prompts_1.4/
+/kenney_ui-pack/
+/kenney_ui-pack-space-expansion/
+/kenney_light-masks-1.0/
+/kenney_smoke-particles/
+/kenney_space-kit/
+/kenney_interface-sounds/
+/kenney_particle-pack/
+/kenney_sci-fi-sounds/
+/fonts/
+/audiio/**
+!/audiio/
+!/audiio/.gdignore
+/*.exr
+
+# Temporary research / extraction artifacts
+/tmp_video_frames/
+/tmp_video_frames_ui_issue/
+
+# Unused external asset packs (not referenced by the game)
+/kenney_background-elements/
+
+# Scratch planning notes
+/plan1.txt
+/plan2.txt

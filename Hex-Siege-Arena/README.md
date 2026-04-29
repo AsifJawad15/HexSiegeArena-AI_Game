@@ -1,0 +1,28 @@
+# Hex-Siege-Arena
+
+Godot 4 rebuild of Hex Siege Arena with AI-vs-AI as the flagship mode.
+
+## Current Status
+
+- Phase 1 foundation is in progress
+- The repo now contains a Godot project skeleton, scene flow, autoloads, and the first shared data classes
+
+## Open In Godot
+
+1. Open Godot 4
+2. Import this folder as a project
+3. Run the default scene
+
+## Key Files
+
+- `project.godot`
+- `promt.md`
+- `update.md`
+
+## Phase Workflow
+
+- implement one bounded slice
+- verify locally
+- update `update.md`
+- commit with a focused message
+- push to `origin/main`
